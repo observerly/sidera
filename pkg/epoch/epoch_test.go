@@ -25,6 +25,13 @@ var datetime time.Time = time.Date(2021, 5, 14, 0, 0, 0, 0, time.UTC)
 
 /*****************************************************************************************************************/
 
+func TestGetJ1858(t *testing.T) {
+	// Test the Julian Date calculation for the J1858.0 epoch:
+	assert.Equal(t, J1858, 2400000.5)
+}
+
+/*****************************************************************************************************************/
+
 func TestGetJ1970(t *testing.T) {
 	// Test the Julian Date calculation for the Unix epoch:
 	assert.Equal(t, J1970, 2440587.5)
