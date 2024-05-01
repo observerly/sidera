@@ -69,3 +69,15 @@ func TestGetUniversalTime(t *testing.T) {
 }
 
 /*****************************************************************************************************************/
+
+func TestGreenwhichSiderealTime(t *testing.T) {
+	var got float64 = GetGreenwichSiderealTime(datetime)
+
+	var want float64 = 15.46396124
+
+	if math.Abs(got-want) > 0.00001 {
+		t.Errorf("got %f, wanted %f", got, want)
+	}
+}
+
+/*****************************************************************************************************************/
