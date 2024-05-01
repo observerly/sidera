@@ -11,10 +11,17 @@ package epoch
 /*****************************************************************************************************************/
 
 import (
+	"math"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
+
+/*****************************************************************************************************************/
+
+// We define a datetime as some arbitrary date and time for testing purposes:
+var datetime time.Time = time.Date(2021, 5, 14, 0, 0, 0, 0, time.UTC)
 
 /*****************************************************************************************************************/
 
@@ -28,6 +35,18 @@ func TestGetJ1970(t *testing.T) {
 func TestGetJ2000(t *testing.T) {
 	// Test the Julian Date calculation for the J2000.0 epoch:
 	assert.Equal(t, J2000, 2451545.0)
+}
+
+/*****************************************************************************************************************/
+
+func TestGetJulianDate(t *testing.T) {
+	var got float64 = GetJulianDate(datetime)
+
+	var want float64 = 2459348.5
+
+	if math.Abs(got-want) > 0.00001 {
+		t.Errorf("got %f, wanted %f", got, want)
+	}
 }
 
 /*****************************************************************************************************************/
