@@ -13,6 +13,26 @@ import "time"
 /*****************************************************************************************************************/
 
 /*
+the epoch of J1858.0 i.e., 17 November 1858 00:00:00 UTC.
+
+The Modified Julian Date (MJD) was introduced to simplify certain astronomical calculations
+by subtracting 2,400,000.5 days from the Julian Date (JD). This modification effectively
+starts the count from midnight rather than noon and shifts the epoch from January 1, 4713
+BC, to November 17, 1858.
+
+For J1858, which refers to the year 1858, we need to find the Julian Date for January 1,
+1858, and then convert it to Modified Julian Date. The Julian Day Number for January 1,
+1858, at noon UT is 2,400,000, making this the exact date where MJD is zero.
+
+Therefore, the MJD for J1858 (January 1, 1858, at midnight UT) is zero. This also coincides
+with the start of the Modified Julian Date system, so J1858 itself marks a significant
+reference point in timekeeping for astronomy.
+*/
+const J1858 float64 = 2400000.5
+
+/*****************************************************************************************************************/
+
+/*
 the epoch of Unix time start i.e., 1 January 1970 00:00:00 UTC.
 
 Julian Date is calculated from the Julian Day Number plus the fraction of a day since the
