@@ -8,7 +8,10 @@
 
 package epoch
 
-import "time"
+import (
+	"math"
+	"time"
+)
 
 /*****************************************************************************************************************/
 
@@ -102,6 +105,55 @@ func GetUniversalTime(datetime time.Time) time.Time {
 	JD := GetJulianDate(datetime)
 	// return the Universal Time:
 	return time.Unix(0, int64((JD-J1970)*86400000.0*1e6)).UTC()
+}
+
+/*****************************************************************************************************************/
+
+/*
+the Greenwich Sidereal Time (GST) for a given date and time.
+
+The Greenwich Sidereal Time (GST) is the angle between the Greenwich Meridian and the vernal
+equinox, measured in sidereal hours. It is a measure of the Earth's rotation with respect to
+the fixed stars. Sidereal time is based on the Earth's rotation relative to the stars, rather
+than relative to the Sun, as is the case with solar time. Sidereal time is used in astronomy to
+determine the positions of celestial objects in the sky.
+
+The Greenwich Sidereal Time (GST) is calculated by taking the Julian Date for the given datetime,
+subtracting the Julian Date for the previous midnight UT, and then applying a correction factor
+to account for the fractional number of hours since midnight. The result is the Greenwich Sidereal
+Time for the given datetime, measured in hours.
+*/
+func GetGreenwichSiderealTime(datetime time.Time) float64 {
+	// the Julian Date for the given datetime:
+	JD := GetJulianDate(datetime)
+
+	// the Julian Date for the previous midnight UT:
+	JD0 := GetJulianDate(time.Date(datetime.Year(), 1, 0, 0, 0, 0, 0, time.UTC))
+
+	// the number of centuries since J2000.0:
+	T := (JD0 - 2415020.0) / 36525
+
+	// the Besselian star year:
+	B := 24.0 - (6.6460656 + 2400.051262*T + 0.00002581*math.Pow(T, 2)) + float64(24*(datetime.Year()-1900))
+
+	// the Greenwich Sidereal Time (GST) at 0h UT for the given datetime:
+	T0 := 0.0657098*math.Floor(JD-JD0) - B
+
+	// the fractional number of hours for the given datetime since midnight:
+	UT := (float64(datetime.UnixMilli()) - float64(time.Date(datetime.Year(), datetime.Month(), datetime.Day(), 0, 0, 0, 0, time.UTC).UnixMilli())) / 3600000
+
+	// the correction factor for the given datetime:
+	A := UT * 1.002737909
+
+	// the Greenwich Sidereal Time (GST) for the given datetime:
+	GST := math.Mod(T0+A, 24)
+
+	// correct for negative hour angles (24 hours is equivalent to 360°)
+	if GST < 0 {
+		GST += 24
+	}
+
+	return math.Mod(GST, 24)
 }
 
 /*****************************************************************************************************************/
