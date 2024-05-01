@@ -15,6 +15,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/observerly/sidera/pkg/common"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -22,6 +23,11 @@ import (
 
 // We define a datetime as some arbitrary date and time for testing purposes:
 var datetime time.Time = time.Date(2021, 5, 14, 0, 0, 0, 0, time.UTC)
+
+/*****************************************************************************************************************/
+
+// We define the geographic coordinates of Mauna Kea, Hawaii for testing purposes:
+var longitude float64 = -155.468094
 
 /*****************************************************************************************************************/
 
@@ -74,6 +80,22 @@ func TestGreenwhichSiderealTime(t *testing.T) {
 	var got float64 = GetGreenwichSiderealTime(datetime)
 
 	var want float64 = 15.46396124
+
+	if math.Abs(got-want) > 0.00001 {
+		t.Errorf("got %f, wanted %f", got, want)
+	}
+}
+
+/*****************************************************************************************************************/
+
+func TestLocalSiderealTime(t *testing.T) {
+	var got float64 = GetLocalSiderealTime(datetime, common.GeographicCoordinate{
+		Latitude:  0,
+		Longitude: longitude,
+		Elevation: 0,
+	})
+
+	var want float64 = 5.099422
 
 	if math.Abs(got-want) > 0.00001 {
 		t.Errorf("got %f, wanted %f", got, want)
