@@ -27,3 +27,19 @@ and fractions of days from the start of their epoch.
 const J1970 float64 = 2440587.5
 
 /*****************************************************************************************************************/
+
+/*
+the epoch of J2000.0 i.e., 1 January 2000 12:00:00 UTC.
+
+The Julian Date for J2000.0 is 2,451,545.0. This date is often used as a reference epoch in
+astronomy and celestial mechanics. It is particularly useful for calculating the positions of
+celestial objects and for defining the equatorial coordinate system.
+
+This date is notably significant because J2000 is used as a reference epoch for the
+International Celestial Reference System (ICRS), which is the current standard for defining
+the positions of celestial objects. J2000 is also used as the reference epoch for the
+equatorial coordinate system, which is based on the celestial equator and the vernal equinox.
+*/
+const J2000 float64 = 2451545.0
+
+/*****************************************************************************************************************/
