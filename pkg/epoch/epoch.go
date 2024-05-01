@@ -11,6 +11,8 @@ package epoch
 import (
 	"math"
 	"time"
+
+	"github.com/observerly/sidera/pkg/common"
 )
 
 /*****************************************************************************************************************/
@@ -154,6 +156,35 @@ func GetGreenwichSiderealTime(datetime time.Time) float64 {
 	}
 
 	return math.Mod(GST, 24)
+}
+
+/*****************************************************************************************************************/
+
+/*
+the Local Sidereal Time (LST) for a given date and time at a specific geographic location.
+
+The Local Sidereal Time (LST) is the local correction applied to the Greenwich Sidereal Time
+(GST) to account for the observer's longitude. It is the angle between the observer's meridian
+and the vernal equinox, measured in sidereal hours. The Local Sidereal Time is used in astronomy
+to determine the positions of celestial objects in the sky from a specific location on Earth.
+*/
+func GetLocalSiderealTime(datetime time.Time, observer common.GeographicCoordinate) float64 {
+	// get the Greenwich Sidereal Time:
+	GST := GetGreenwichSiderealTime(datetime)
+
+	// calculate the Local Sidereal Time:
+	d := (GST + observer.Longitude/15.0) / 24.0
+
+	// apply a correction factor to account for the fractional number of hours:
+	d -= math.Floor(d)
+
+	// correct for negative hour angles (24 hours is equivalent to 360°)
+	if d < 0 {
+		d += 1
+	}
+
+	// return the Local Sidereal Time:
+	return 24.0 * d
 }
 
 /*****************************************************************************************************************/
