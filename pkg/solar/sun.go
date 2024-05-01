@@ -14,6 +14,7 @@ import (
 	"math"
 	"time"
 
+	"github.com/observerly/sidera/pkg/common"
 	"github.com/observerly/sidera/pkg/epoch"
 )
 
@@ -44,6 +45,33 @@ func GetMeanAnomaly(datetime time.Time) float64 {
 	}
 
 	return math.Mod(M, 360)
+}
+
+/*****************************************************************************************************************/
+
+/*
+the Equation of Center of the Sun for a given datetime
+
+The Solar Equation of Center is the difference between the true anomaly of the Sun and its mean anomaly.
+
+The Equation of Center is an important concept in solar astronomy, as it is used to calculate the position
+of the Sun in the sky at any given time. By knowing the Equation of Center, an observer can determine the
+Sun's position relative to the vernal equinox and calculate the time of sunrise, sunset, and other solar events.
+*/
+func GetEquationOfCenter(datetime time.Time) float64 {
+	// get the Julian Date for the current epoch:
+	JD := epoch.GetJulianDate(datetime)
+
+	// calculate the number of centuries since J2000.0:
+	T := (JD - 2451545.0) / 36525
+
+	// get the solar mean anomaly:
+	M := GetMeanAnomaly(datetime)
+
+	// calculate the equation of center:
+	return (1.914602-0.004817*math.Pow(T, 2)-0.000014*math.Pow(T, 3))*math.Sin(common.Radians(M)) +
+		(0.019993-0.000101*math.Pow(T, 2))*math.Sin(2*common.Radians(M)) +
+		0.000289*math.Sin(3*common.Radians(M))
 }
 
 /*****************************************************************************************************************/

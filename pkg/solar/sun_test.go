@@ -31,3 +31,15 @@ func TestGetSolarMeanAnomaly(t *testing.T) {
 }
 
 /*****************************************************************************************************************/
+
+func TestGetSolarEquationOfCenter(t *testing.T) {
+	var got float64 = GetEquationOfCenter(datetime)
+
+	var want float64 = 1.4754839423594457
+
+	if got-want > 0.0001 {
+		t.Errorf("got %f, wanted %f", got, want)
+	}
+}
+
+/*****************************************************************************************************************/
