@@ -66,3 +66,22 @@ func GetJulianDate(datetime time.Time) float64 {
 }
 
 /*****************************************************************************************************************/
+
+/*
+the Universal Time (UT) for a given date and time.
+
+Universal Time (UT) is a time standard based on the Earth's rotation. It is a modern continuation
+of Greenwich Mean Time (GMT), i.e., the mean solar time on the Prime Meridian at Greenwich, London.
+In fact, the term "Universal Time" is ambiguous, as there are several versions of it, the most
+commonly used being Coordinated Universal Time (UTC) and Universal Time (UT1). All of these versions
+of Universal Time are based on the rotation of the Earth, but they differ in how they account for
+irregularities in the Earth's rotation.
+*/
+func GetUniversalTime(datetime time.Time) time.Time {
+	// get the Julian Date for the given datetime:
+	JD := GetJulianDate(datetime)
+	// return the Universal Time:
+	return time.Unix(0, int64((JD-J1970)*86400000.0*1e6)).UTC()
+}
+
+/*****************************************************************************************************************/

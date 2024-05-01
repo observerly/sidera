@@ -50,3 +50,15 @@ func TestGetJulianDate(t *testing.T) {
 }
 
 /*****************************************************************************************************************/
+
+func TestGetUniversalTime(t *testing.T) {
+	var got time.Time = GetUniversalTime(datetime)
+
+	var want time.Time = time.Date(2021, 5, 14, 0, 0, 0, 0, time.UTC)
+
+	if math.Abs(float64(got.UnixMilli())-float64(want.UnixMilli())) > 0.00001 {
+		t.Errorf("got %q, wanted %q", got, want)
+	}
+}
+
+/*****************************************************************************************************************/
