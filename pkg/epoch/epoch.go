@@ -8,6 +8,8 @@
 
 package epoch
 
+import "time"
+
 /*****************************************************************************************************************/
 
 /*
@@ -41,5 +43,26 @@ the positions of celestial objects. J2000 is also used as the reference epoch fo
 equatorial coordinate system, which is based on the celestial equator and the vernal equinox.
 */
 const J2000 float64 = 2451545.0
+
+/*****************************************************************************************************************/
+
+/*
+the Julian Date (JD) for a given date and time.
+
+The Julian date (Julian day, JD) is a notation that specifies a date and time with a single
+decimal number, the integer-portion specifying the number of noon-to-noon days since noon,
+November 24, 4714 BC (Gregorian calendar), and the fractional part specifying the additional
+fraction of a 24-hour day. For example, Julian date 2451545.0 represents noon January 1, 2000
+and 2451544.958333 (i.e., 2451545.0 minus 1/24) represents 11AM of the same day. Julian date
+notation can be used with your choice of time standards; the IAU recommends Terrestrial Time (TT)
+as the default for astronomical purposes. Note that depending upon the time standard used,
+it can be necessary to adjust calculated time-intervals to accommodate leap seconds.
+*/
+func GetJulianDate(datetime time.Time) float64 {
+	// milliseconds elapsed since 1 January 1970 00:00:00 UTC up until now as an int64:
+	var time int64 = datetime.UTC().UnixNano() / 1e6
+	// return the Julian Date:
+	return float64(time)/86400000.0 + J1970
+}
 
 /*****************************************************************************************************************/
