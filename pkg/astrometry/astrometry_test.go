@@ -54,3 +54,20 @@ func TestGetHourAngle(t *testing.T) {
 }
 
 /*****************************************************************************************************************/
+
+func TestGetObliquityOfTheEcliptic(t *testing.T) {
+	ε := GetObliquityOfTheEcliptic(datetime)
+
+	// Test the Julian Date calculation for the J1858.0 epoch:
+	assert.Equal(t, ε, 23.436511890585354)
+
+	if ε < 0 {
+		t.Errorf("got %f, wanted a positive obliquity of the ecliptic value", ε)
+	}
+
+	if ε > 360 {
+		t.Errorf("got %f, wanted a positive obliquity of the ecliptic value that is less than 360 degrees", ε)
+	}
+}
+
+/*****************************************************************************************************************/
