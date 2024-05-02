@@ -18,6 +18,13 @@ var DEGREES_TO_RADIANS = math.Pi / 180
 
 /*****************************************************************************************************************/
 
+type EclipticCoordinate struct {
+	Longitude float64
+	Latitude  float64
+}
+
+/*****************************************************************************************************************/
+
 type EquatorialCoordinate struct {
 	RightAscension float64
 	Declination    float64
