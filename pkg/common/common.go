@@ -40,6 +40,13 @@ type GeographicCoordinate struct {
 
 /*****************************************************************************************************************/
 
+type HorizontalCoordinate struct {
+	Azimuth  float64
+	Altitude float64
+}
+
+/*****************************************************************************************************************/
+
 func Radians(degrees float64) float64 {
 	return degrees * DEGREES_TO_RADIANS
 }
