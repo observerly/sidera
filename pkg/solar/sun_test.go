@@ -14,6 +14,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/observerly/sidera/pkg/common"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -51,6 +52,25 @@ func TestGetSolarEclipticLongitude(t *testing.T) {
 
 	if got-want > 0.0001 {
 		t.Errorf("got %f, wanted %f", got, want)
+	}
+}
+
+/*****************************************************************************************************************/
+
+func TestGetSolarEclipticCoordinate(t *testing.T) {
+	var got = GetEclipticCoordinate(datetime)
+
+	var want = common.EclipticCoordinate{
+		Longitude: 51.96564888161902,
+		Latitude:  0,
+	}
+
+	if got.Longitude-want.Longitude > 0.0001 {
+		t.Errorf("got %f, wanted %f", got.Longitude, want.Longitude)
+	}
+
+	if got.Latitude-want.Latitude > 0.0001 {
+		t.Errorf("got %f, wanted %f", got.Latitude, want.Latitude)
 	}
 }
 

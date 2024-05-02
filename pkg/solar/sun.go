@@ -107,3 +107,26 @@ func GetEclipticLongitude(datetime time.Time) float64 {
 }
 
 /*****************************************************************************************************************/
+
+/*
+the Ecliptic Coordinate of the Sun for a given datetime
+
+The Solar Ecliptic Coordinate is the position of the Sun in the sky relative to the vernal equinox.
+
+The Solar Ecliptic Coordinate is an important concept in solar astronomy, as it is used to calculate the position
+of the Sun in the sky at any given time. By knowing the Solar Ecliptic Coordinate, an observer can determine the
+Sun's position relative to the vernal equinox and calculate the time of sunrise, sunset, and other solar events.
+*/
+func GetEclipticCoordinate(datetime time.Time) common.EclipticCoordinate {
+	// get the solar ecliptic longitude:
+	λ := GetEclipticLongitude(datetime)
+
+	// return the solar ecliptic coordinate:
+	// the solar ecliptic coordinate is the solar ecliptic longitude and zero latitude:
+	return common.EclipticCoordinate{
+		Longitude: λ,
+		Latitude:  0,
+	}
+}
+
+/*****************************************************************************************************************/
