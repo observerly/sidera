@@ -43,3 +43,15 @@ func TestGetSolarEquationOfCenter(t *testing.T) {
 }
 
 /*****************************************************************************************************************/
+
+func TestGetSolarEclipticLongitude(t *testing.T) {
+	var got float64 = GetEclipticLongitude(datetime)
+
+	var want float64 = 51.96564888161902
+
+	if got-want > 0.0001 {
+		t.Errorf("got %f, wanted %f", got, want)
+	}
+}
+
+/*****************************************************************************************************************/
