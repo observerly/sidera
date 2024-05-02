@@ -75,3 +75,35 @@ func GetEquationOfCenter(datetime time.Time) float64 {
 }
 
 /*****************************************************************************************************************/
+
+/*
+the Ecliptic Longitude of the Sun for a given datetime
+
+The Solar Ecliptic Longitude is the angle between the vernal equinox and the current position of the Sun
+along its orbit around the Earth. It is measured in degrees and increases uniformly with time.
+
+The Solar Ecliptic Longitude is an important concept in solar astronomy, as it is used to calculate the position
+of the Sun in the sky at any given time. By knowing the Solar Ecliptic Longitude, an observer can determine the
+Sun's position relative to the vernal equinox and calculate the time of sunrise, sunset, and other solar events.
+*/
+func GetEclipticLongitude(datetime time.Time) float64 {
+	// get the Julian Date for the current epoch:
+	JD := epoch.GetJulianDate(datetime)
+
+	// calculate the number of centuries since J2000.0:
+	T := (JD - 2451545.0) / 36525
+
+	// calculate the solar ecliptic longitude:
+	// the solar ecliptic longitude is the sum of the mean anomaly and the equation of center:
+	L := math.Mod((280.46646 + 36000.76983*T + 0.0003032*math.Pow(T, 2)), 360)
+
+	// applies modulo correction to the angle, and ensures always positive:
+	if L < 0 {
+		L += 360
+	}
+
+	// return the solar ecliptic longitude:
+	return L
+}
+
+/*****************************************************************************************************************/
