@@ -53,3 +53,32 @@ func GetHourAngle(
 }
 
 /*****************************************************************************************************************/
+
+/*
+the obliquity of the ecliptic is the angle between the plane of the Earth's orbit around the Sun
+
+The obliquity of the ecliptic is the angle between the plane of the Earth's orbit around the Sun
+(the ecliptic plane) and the plane of the celestial equator. It is an important parameter in astronomy
+and celestial navigation, as it affects the position of celestial objects in the sky and the apparent
+motion of the Sun, Moon, and planets.
+*/
+func GetObliquityOfTheEcliptic(datetime time.Time) float64 {
+	// the Julian Date for the given datetime:
+	JD := epoch.GetJulianDate(datetime)
+
+	// the number of centuries since J2000.0:
+	T := (JD - 2451545.0) / 36525
+
+	// calculate the obliquity of the ecliptic:
+	ε := 23.439292 - (46.845*T+0.00059*math.Pow(T, 2)+0.001813*math.Pow(T, 3))/3600
+
+	// correct for negative values:
+	if ε < 0 {
+		ε += 360
+	}
+
+	// return the obliquity of the ecliptic corrected for modulo % 360.
+	return math.Mod(ε, 360)
+}
+
+/*****************************************************************************************************************/
