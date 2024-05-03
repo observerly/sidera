@@ -143,10 +143,32 @@ Sun's position relative to the vernal equinox and calculate the time of sunrise,
 */
 func GetEquatorialCoordinate(datetime time.Time) common.EquatorialCoordinate {
 	// get the solar ecliptic coordinate:
-	ecliptic := GetEclipticCoordinate(datetime)
+	ec := GetEclipticCoordinate(datetime)
 
 	// convert the solar ecliptic coordinate to the solar equatorial coordinate:
-	return coordinates.ConvertEclipticToEquatorialCoordinate(datetime, ecliptic)
+	return coordinates.ConvertEclipticToEquatorialCoordinate(datetime, ec)
+}
+
+/*****************************************************************************************************************/
+
+/*
+the Horizontal Coordinate of the Sun for a given datetime
+
+The Solar Horizontal Coordinate is the position of the Sun in the sky relative to the observer's local horizon.
+
+The Solar Horizontal Coordinate is an important concept in solar astronomy, as it is used to calculate the position
+of the Sun in the sky at any given time. By knowing the Solar Horizontal Coordinate, an observer can determine the
+Sun's position relative to the vernal equinox and calculate the time of sunrise, sunset, and other solar events.
+*/
+func GetHorizontalCoordinate(
+	datetime time.Time,
+	observer common.GeographicCoordinate,
+) common.HorizontalCoordinate {
+	// get the solar equatorial coordinate:
+	eq := GetEquatorialCoordinate(datetime)
+
+	// convert the solar equatorial coordinate to the solar horizontal coordinate:
+	return coordinates.ConvertEquatorialToHorizontalCoordinate(datetime, observer, eq)
 }
 
 /*****************************************************************************************************************/

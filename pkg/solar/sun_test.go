@@ -25,6 +25,14 @@ var datetime time.Time = time.Date(2021, 5, 14, 0, 0, 0, 0, time.UTC)
 
 /*****************************************************************************************************************/
 
+var observer common.GeographicCoordinate = common.GeographicCoordinate{
+	Latitude:  19.8207,
+	Longitude: -155.468094,
+	Elevation: 4205,
+}
+
+/*****************************************************************************************************************/
+
 func TestGetSolarMeanAnomaly(t *testing.T) {
 	var got float64 = GetMeanAnomaly(datetime)
 
@@ -90,6 +98,25 @@ func TestSolarEquatorialCoordinate(t *testing.T) {
 
 	if got.Declination-want.Declination > 0.0001 {
 		t.Errorf("got %f, wanted %f", got.Declination, want.Declination)
+	}
+}
+
+/*****************************************************************************************************************/
+
+func TestSolarHorizontalCoordinate(t *testing.T) {
+	var got = GetHorizontalCoordinate(datetime, observer)
+
+	var want = common.HorizontalCoordinate{
+		Azimuth:  271.018685,
+		Altitude: 72.7850383767226,
+	}
+
+	if got.Azimuth-want.Azimuth > 0.0001 {
+		t.Errorf("got %f, wanted %f", got.Azimuth, want.Azimuth)
+	}
+
+	if got.Altitude-want.Altitude > 0.0001 {
+		t.Errorf("got %f, wanted %f", got.Altitude, want.Altitude)
 	}
 }
 
