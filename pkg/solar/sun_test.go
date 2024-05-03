@@ -75,3 +75,22 @@ func TestGetSolarEclipticCoordinate(t *testing.T) {
 }
 
 /*****************************************************************************************************************/
+
+func TestSolarEquatorialCoordinate(t *testing.T) {
+	var got = GetEquatorialCoordinate(datetime)
+
+	var want = common.EquatorialCoordinate{
+		RightAscension: 51.96564888161902,
+		Declination:    18.256452,
+	}
+
+	if got.RightAscension-want.RightAscension > 0.0001 {
+		t.Errorf("got %f, wanted %f", got.RightAscension, want.RightAscension)
+	}
+
+	if got.Declination-want.Declination > 0.0001 {
+		t.Errorf("got %f, wanted %f", got.Declination, want.Declination)
+	}
+}
+
+/*****************************************************************************************************************/

@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/observerly/sidera/pkg/common"
+	"github.com/observerly/sidera/pkg/coordinates"
 	"github.com/observerly/sidera/pkg/epoch"
 )
 
@@ -127,6 +128,25 @@ func GetEclipticCoordinate(datetime time.Time) common.EclipticCoordinate {
 		Longitude: λ,
 		Latitude:  0,
 	}
+}
+
+/*****************************************************************************************************************/
+
+/*
+the Equatorial Coordinate of the Sun for a given datetime
+
+The Solar Equatorial Coordinate is the position of the Sun in the sky relative to the celestial equator.
+
+The Solar Equatorial Coordinate is an important concept in solar astronomy, as it is used to calculate the position
+of the Sun in the sky at any given time. By knowing the Solar Equatorial Coordinate, an observer can determine the
+Sun's position relative to the vernal equinox and calculate the time of sunrise, sunset, and other solar events.
+*/
+func GetEquatorialCoordinate(datetime time.Time) common.EquatorialCoordinate {
+	// get the solar ecliptic coordinate:
+	ecliptic := GetEclipticCoordinate(datetime)
+
+	// convert the solar ecliptic coordinate to the solar equatorial coordinate:
+	return coordinates.ConvertEclipticToEquatorialCoordinate(datetime, ecliptic)
 }
 
 /*****************************************************************************************************************/
