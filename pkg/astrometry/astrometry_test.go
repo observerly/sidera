@@ -71,3 +71,20 @@ func TestGetObliquityOfTheEcliptic(t *testing.T) {
 }
 
 /*****************************************************************************************************************/
+
+func TestGetParallacticAngle(t *testing.T) {
+	q := GetParallacticAngle(datetime, observer, betelgeuse)
+
+	// Test the Julian Date calculation for the J1858.0 epoch:
+	assert.Equal(t, q, -42.62888536971644 + 360)
+
+	if q < 0 {
+		t.Errorf("got %f, wanted a positive parallactic angle value", q)
+	}
+
+	if q > 360 {
+		t.Errorf("got %f, wanted a positive parallactic angle value that is less than 360 degrees", q)
+	}
+}
+
+/*****************************************************************************************************************/
