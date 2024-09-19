@@ -82,3 +82,35 @@ func GetObliquityOfTheEcliptic(datetime time.Time) float64 {
 }
 
 /*****************************************************************************************************************/
+ 
+/*
+the parallactic angle is the angle between the celestial meridian and the great circle that passes through 
+the celestial body
+
+The parallactic angle is the angle between the celestial meridian (the great circle that passes through the celestial
+pole and the zenith) and the great circle that passes through the celestial body and the zenith. It is an important
+parameter in astronomy and celestial navigation, as it affects the position of celestial objects in the sky and the
+apparent motion of the Sun, Moon, and planets.
+*/
+func GetParallacticAngle(datetime time.Time, observer common.GeographicCoordinate, target common.EquatorialCoordinate) float64 {
+	latitude := observer.Latitude
+
+	dec := target.Declination
+
+	// the hour angle is the angular distance on the celestial sphere measured westward along the celestial equator:
+	ha := common.Radians(GetHourAngle(datetime, observer, target))
+
+	q := common.Degrees(math.Atan2(
+		math.Sin(ha),
+		math.Tan(common.Radians(latitude))*math.Cos(common.Radians(dec))-math.Sin(common.Radians(dec))*math.Cos(ha),
+	))
+
+	// correct for negative values:
+	if q < 0 {
+		q += 360
+	}
+
+	return math.Mod(q, 360)
+}
+
+/*****************************************************************************************************************/
