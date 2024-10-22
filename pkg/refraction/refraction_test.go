@@ -131,3 +131,50 @@ func TestRefractionAtTargetWithPressureAndTemperature(t *testing.T) {
 }
 
 /*****************************************************************************************************************/
+
+func TestAirmassAtTargetBelowHorizon(t *testing.T) {
+	// Test the airmass at a target below the horizon:
+	Z := GetAirmass(common.HorizontalCoordinate{
+		Altitude: -10.0,
+		Azimuth:  180.0,
+	})
+
+	if Z != math.Inf(1) {
+		t.Errorf("Expected airmass to be infinite, got %f", Z)
+	}
+}
+
+/*****************************************************************************************************************/
+
+func TestAirmassAtTargetAboveHorizon(t *testing.T) {
+	// Test the airmass at a target above the horizon:
+	Z := GetAirmass(target)
+
+	if Z == math.Inf(1) {
+		t.Errorf("Expected airmass to be finite, got %f", Z)
+	}
+
+	if Z <= 0 {
+		t.Errorf("Expected airmass to be positive, got %f", Z)
+	}
+
+	if Z > 1.5 {
+		t.Errorf("Expected airmass to be less than 1.5, got %f", Z)
+	}
+}
+
+/*****************************************************************************************************************/
+
+func TestAirmassAtTargetAtHorizon(t *testing.T) {
+	// Test the airmass at a target below the horizon:
+	Z := GetAirmass(common.HorizontalCoordinate{
+		Altitude: 0.0,
+		Azimuth:  180.0,
+	})
+
+	if Z != math.Inf(1) {
+		t.Errorf("Expected airmass to be infinite, got %f", Z)
+	}
+}
+
+/*****************************************************************************************************************/

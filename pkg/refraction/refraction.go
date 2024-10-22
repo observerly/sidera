@@ -42,3 +42,27 @@ func GetRefraction(
 }
 
 /*****************************************************************************************************************/
+
+func GetAirmass(target common.HorizontalCoordinate) float64 {
+	alt := target.Altitude
+
+	if alt < 0 {
+		return math.Inf(1)
+	}
+
+	// Convert the altitude to radians:
+	z := common.Radians(target.Altitude)
+
+	// Get the tangent of the altitude:
+	tanZ := math.Tan(z)
+
+	// Airmass approaches infinity as the altitude approaches 0 degrees (horizon):
+	if tanZ == 0 {
+		return math.Inf(1)
+	}
+
+	// Get the airmass using the Ciddor (1996) equation of state for air:
+	return 1 / (math.Sin(z) + 0.0001184*(1/tanZ) + 0.003188*(1/tanZ*tanZ))
+}
+
+/*****************************************************************************************************************/
