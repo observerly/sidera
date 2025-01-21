@@ -10,7 +10,9 @@ package common
 
 /*****************************************************************************************************************/
 
-import "math"
+import (
+	"math"
+)
 
 /*****************************************************************************************************************/
 
@@ -55,6 +57,25 @@ func Radians(degrees float64) float64 {
 
 func Degrees(radians float64) float64 {
 	return radians / DEGREES_TO_RADIANS
+}
+
+/*****************************************************************************************************************/
+
+func DegreesToHDMS(value float64) (int, int, int, float64) {
+	// Calculate the degrees part:
+	degrees := math.Floor(value)
+
+	// Calculate the hours part (15 degrees per hour):
+	hours := degrees / 15
+
+	// Calculate the minutes part:
+	minutes := int(math.Floor((value - degrees) * 60))
+
+	// Calculate the seconds part:
+	seconds := ((value-degrees)*60 - float64(minutes)) * 60
+
+	// Return the HDMS values:
+	return int(hours), int(degrees), int(minutes), seconds
 }
 
 /*****************************************************************************************************************/
